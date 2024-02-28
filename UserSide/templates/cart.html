@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Cart</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="">Home</a></li>
+            <li class="breadcrumb-item active">Cart</li>
+          </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+        {% if items|length == 0 %}
+        
+        <div class="card">
+            <div class="card-body text-center">
+              <h5 class="card-title"><i class="bi bi-cart-x-fill"></i> Cart Empty</h5>
+              <a href="{% url "home-page" %}"><button type="button" class="btn btn-primary"><i class="bi bi-cart"></i> Add Menu</button></a>
+            </div>
+          </div><!-- End Card with an image on top -->
+        </div>
+
+        {% else %}
+
+        <div class="card">
+            <div class="card-body ">
+              <h5 class="card-title"><i class="bi bi-cart"></i></h5>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Type</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Item</th>
+                        <th scope="col">Price</th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                        {% for item in items  %}
+                        
+                        <tr>
+                            <td>{{item.category.title}}</td>
+                            <td>{{item.option.option_title}}</td>
+                            <td>{{item.dish_name}}</td>
+                            <td>{{item.dish_price}}</td>
+                            <td>
+                                <a href="{% url "cart" item.id %}">
+                                    <button type="button" class="btn btn-danger">
+                                      <i class="bi bi-cart-dash"></i> Remove
+                                    </button>
+                                  </a>
+                            </td>
+                        </tr>
+                        
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+          </div><!-- End Card with an image on top -->
+        </div>
+        
+        {% endif %}
+    </section>
+
+
+</main>
+
+
+{% endblock content %}

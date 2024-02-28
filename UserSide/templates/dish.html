@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>{{option_title}} Options</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="">Home</a></li>
+            <li class="breadcrumb-item active">{{option_title}} Options</li>
+          </ol>
+        </nav>
+      </div><!-- End Page Title -->
+
+    <section class="section">
+        <div class="row">
+
+          {% for dish in dishes %}
+
+            <div class="col-3">
+                <!-- Card with an image on top -->
+                <div class="card text-center">
+                  <img src="{{dish.dish_image.url}}" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title"><strong>{{dish.dish_name}}</strong></h5>
+                    <div class="d-flex justify-content-between">
+                      <button type="button" class="btn btn-primary">
+                        Price<strong><i class="bi bi-currency-rupee"></i>{{dish.dish_price}}/-</strong>
+                      </button>
+                      {% if dish.id not in users_cart %}
+                      <a href="{% url "cart" dish.id %}">
+                        <button type="button" class="btn btn-success">
+                          <i class="bi bi-cart-plus"></i> Add
+                        </button>
+                      </a>
+                      {% else %}
+                      <a href="{% url "cart" dish.id %}">
+                        <button type="button" class="btn btn-danger">
+                          <i class="bi bi-cart-dash"></i> Remove
+                        </button>
+                      </a>
+                      {% endif %}
+
+                    </div>
+                  </div>
+                </div><!-- End Card with an image on top -->
+            </div>
+
+            {% endfor %}
+
+        </div>
+    </section>
+
+
+</main>
+
+
+{% endblock content %}
